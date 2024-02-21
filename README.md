@@ -95,8 +95,8 @@ These sections describe requirements for using this module.
 
 The following dependencies must be available:
 
-- [Terraform][terraform] >= v1.3.0
-- [Terraform Provider for GCP][terraform-provider-gcp] plugin >= v5.1.0
+- Terraform >= v1.3.0
+- Terraform Provider for GCP plugin >= v5.1.0
 
 ### Service Account
 
