@@ -2,7 +2,7 @@
 
 ## Description
 
-This Terraform module simplifies the deployment and management of Secure Web Proxy (SWP) across multiple Google Cloud regions. It handles the creation of SWP gateways, comprehensive policies, and fine-grained rules to control egress web traffic. 
+This Terraform module simplifies the deployment and management of Secure Web Proxy (SWP) across multiple Google Cloud regions. It handles the creation of SWP gateways, comprehensive policies, and fine-grained rules to control egress web traffic.
 
 ### PreDeploy
 - VPC
