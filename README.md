@@ -16,6 +16,9 @@ Basic usage of this module is as follows:
 
 ```hcl
 module "secure_web_proxy" {
+  source  = "GoogleCloudPlatform/secure-web-proxy/google"
+  version = "0.1.0"
+
   gateway_name     = "simple-swp"
   project_id       = var.project_id
   region           = var.region
