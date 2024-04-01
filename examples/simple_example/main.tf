@@ -53,5 +53,6 @@ module "secure_web_proxy" {
       values      = ["www.example.com", "about.example.com", "github.com/example-org/*"]
     }
   }
+
   depends_on = [google_compute_subnetwork.proxy_subnet]
 }
