@@ -54,7 +54,5 @@ module "secure_web_proxy" {
     }
   }
 
-  depends_on = [
-    google_compute_subnetwork.proxy_subnet
-  ]
+  depends_on = [google_compute_subnetwork.proxy_subnet]
 }
