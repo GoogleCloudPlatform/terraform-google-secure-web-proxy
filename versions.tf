@@ -28,6 +28,6 @@ terraform {
   }
 
   provider_meta "google" {
-    module_name = "blueprints/terraform/terraform-google-secure-web-proxy/v0.1.0"
+    module_name = "blueprints/terraform/terraform-google-secure-web-proxy/v0.1.1"
   }
 }
