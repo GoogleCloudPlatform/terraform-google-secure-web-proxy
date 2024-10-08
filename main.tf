@@ -54,7 +54,7 @@ resource "google_network_security_gateway_security_policy_rule" "this" {
   session_matcher         = each.value.session_matcher
   application_matcher     = each.value.application_matcher
   basic_profile           = each.value.basic_profile
-  tls_inspection_enabled  = lookup(var.policy, "tls_inspection_policy", null) != null ? true : false
+  tls_inspection_enabled  = each.value.tls_inspection_enabled
   depends_on = [
     google_network_security_url_lists.this
   ]

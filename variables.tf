@@ -82,12 +82,13 @@ variable "policy" {
 
 variable "rules" {
   type = map(object({
-    enabled             = optional(bool, true)
-    description         = optional(string, "SWP rules created by terraform")
-    priority            = number                                                # Lower number corresponds to higher precedence.
-    session_matcher     = optional(string, "inIpRange(source.ip, '0.0.0.0/0')") # By default, open all source ips.
-    application_matcher = optional(string)
-    basic_profile       = optional(string, "ALLOW") # Supports ALLOW or DENY.string
+    enabled                = optional(bool, true)
+    description            = optional(string, "SWP rules created by terraform")
+    priority               = number                                                # Lower number corresponds to higher precedence.
+    session_matcher        = optional(string, "inIpRange(source.ip, '0.0.0.0/0')") # By default, open all source ips.
+    application_matcher    = optional(string)
+    basic_profile          = optional(string, "ALLOW") # Supports ALLOW or DENY.string
+    tls_inspection_enabled = optional(bool, false)
   }))
   description = "Security policy rules configuration."
   default     = null
