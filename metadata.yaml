@@ -1,0 +1,125 @@
+apiVersion: blueprints.cloud.google.com/v1alpha1
+kind: BlueprintMetadata
+metadata:
+  name: terraform-google-secure-web-proxy
+  annotations:
+    config.kubernetes.io/local-config: "true"
+spec:
+  info:
+    title: terraform-google-secure-web-proxy
+    source:
+      repo: https://github.com/Daisyprakash/terraform-google-secure-web-proxy.git
+      sourceType: git
+    version: 0.1.0
+    actuationTool:
+      flavor: Terraform
+      version: ">= 1.3.0"
+    description: {}
+  content:
+    examples:
+      - name: simple_example
+        location: examples/simple_example
+  interfaces:
+    variables:
+      - name: project_id
+        description: The Google Cloud project ID where the secure web proxy will be deployed.
+        varType: string
+        required: true
+      - name: gateway_name
+        description: The name of secure web proxy gateway to be created.
+        varType: string
+        required: true
+      - name: region
+        description: The region in which the secure web proxy components will be created.
+        varType: string
+        required: true
+      - name: ip_address
+        description: Static IP reservation for SWP. When no address is provided, an IP from the input subnetwork is allocated.
+        varType: string
+        defaultValue: ""
+      - name: scope
+        description: Scope determines how configuration across multiple gateway instances are merged. The configuration for multiple gateway instances with the same scope will be merged as presented as a single coniguration to the proxy. Defaults to name of the region. Max length - 64 characters.
+        varType: string
+        defaultValue: ""
+      - name: certificate_urls
+        description: A fully-qualified certificates URL reference. The proxy presents a Certificate (selected based on SNI) when establishing a TLS connection.
+        varType: list(string)
+        required: true
+      - name: network
+        description: URI of the subnetwork for which this secure web proxy will be created.
+        varType: string
+        required: true
+      - name: subnetwork
+        description: URI of the subnetwork for which this secure web proxy will be created.
+        varType: string
+        required: true
+      - name: delete_swg_autogen_router_on_destroy
+        description: boolean option to also delete auto generated router by the gateway creation.
+        varType: bool
+        defaultValue: true
+      - name: labels
+        description: Map of labels for secure web proxy gateway.
+        varType: map(string)
+        defaultValue: {}
+      - name: policy
+        description: Gateway security policy configuration.
+        varType: |-
+          object({
+              name        = string
+              description = string
+              tls_inspection_policy = optional(object({
+                name    = string
+                ca_pool = string
+              }))
+            })
+        required: true
+      - name: rules
+        description: Security policy rules configuration.
+        varType: |-
+          map(object({
+              enabled             = optional(bool, true)
+              description         = optional(string, "SWP rules created by terraform")
+              priority            = number                                                # Lower number corresponds to higher precedence.
+              session_matcher     = optional(string, "inIpRange(source.ip, '0.0.0.0/0')") # By default, open all source ips.
+              application_matcher = optional(string)
+              basic_profile       = optional(string, "ALLOW") # Supports ALLOW or DENY.string
+            }))
+      - name: url_lists
+        description: "URL lists that can be used within SWP rules. Attribute values supports: FQDNs and URLs."
+        varType: |-
+          map(object({
+              description = optional(string, "URL lists created by terraform")
+              values      = list(string)
+            }))
+        defaultValue: {}
+    outputs:
+      - name: gateway_id
+        description: Identifier for the secure web proxy gateway.
+        type: string
+      - name: policy_id
+        description: Identifier of the secure web proxy gateway policy.
+        type: string
+      - name: rule_ids
+        description: Identifiers of the secure web proxy rules created.
+        type:
+          - object
+          - {}
+      - name: url_list_ids
+        description: Identifiers of the secure web proxy url lists.
+        type:
+          - object
+          - {}
+  requirements:
+    roles:
+      - level: Project
+        roles:
+          - roles/owner
+    services:
+      - networkservices.googleapis.com
+      - certificatemanager.googleapis.com
+      - networksecurity.googleapis.com
+    providerVersions:
+      - source: hashicorp/google
+        version: ">= 5.1.0, < 6.0"
+      - source: hashicorp/google-beta
+        version: ">= 5.1.0, < 6.0"
