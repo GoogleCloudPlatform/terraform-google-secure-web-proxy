@@ -22,7 +22,7 @@ spec:
   info:
     title: terraform-google-secure-web-proxy
     source:
-      repo: https://github.com/Daisyprakash/terraform-google-secure-web-proxy.git
+      repo: https://github.com/GoogleCloudPlatform/terraform-google-secure-web-proxy.git
       sourceType: git
   ui:
     input:
@@ -57,6 +57,12 @@ spec:
         rules:
           name: rules
           title: Rules
+          properties:
+            priority:
+              name: priority
+              title: Priority
+              min: 0
+              max: 2147483647
         scope:
           name: scope
           title: Scope

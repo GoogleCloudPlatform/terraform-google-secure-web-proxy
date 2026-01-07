@@ -8,7 +8,7 @@ spec:
   info:
     title: terraform-google-secure-web-proxy
     source:
-      repo: https://github.com/Daisyprakash/terraform-google-secure-web-proxy.git
+      repo: https://github.com/GoogleCloudPlatform/terraform-google-secure-web-proxy.git
       sourceType: git
     version: 0.1.0
     actuationTool:
