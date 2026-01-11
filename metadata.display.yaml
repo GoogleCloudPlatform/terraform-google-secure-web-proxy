@@ -36,6 +36,8 @@ spec:
         gateway_name:
           name: gateway_name
           title: Gateway Name
+          regexValidation: ^[a-z](?:[a-z0-9-]{0,61}[a-z0-9])?$
+          validation: Gateway name must start with a lowercase letter followed by up to 62 lowercase letters, numbers, or hyphens and cannot end with a hyphen.
         ip_address:
           name: ip_address
           title: Ip Address
@@ -48,6 +50,12 @@ spec:
         policy:
           name: policy
           title: Policy
+          properties:
+            name:
+              name: name
+              title: Name
+              regexValidation: ^[a-z](?:[a-z0-9-]{0,61}[a-z0-9])?$
+              validation: Policy name must start with a lowercase letter followed by up to 62 lowercase letters, numbers, or hyphens and cannot end with a hyphen.
         project_id:
           name: project_id
           title: Project Id
@@ -58,6 +66,14 @@ spec:
           name: rules
           title: Rules
           properties:
+            basic_profile:
+              name: basic_profile
+              title: Basic profile
+              enumValueLabels:
+                - label: ALLOW
+                  value: ALLOW
+                - label: DENY
+                  value: DENY
             priority:
               name: priority
               title: Priority
@@ -72,3 +88,7 @@ spec:
         url_lists:
           name: url_lists
           title: Url Lists
+    runtime:
+      outputs:
+        gateway_id:
+          visibility: VISIBILITY_ROOT
