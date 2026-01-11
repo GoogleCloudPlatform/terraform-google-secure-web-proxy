@@ -84,6 +84,7 @@ spec:
               application_matcher = optional(string)
               basic_profile       = optional(string, "ALLOW") # Supports ALLOW or DENY.string
             }))
+        defaultValue: {}
       - name: url_lists
         description: "URL lists that can be used within SWP rules. Attribute values supports: FQDNs and URLs."
         varType: |-
