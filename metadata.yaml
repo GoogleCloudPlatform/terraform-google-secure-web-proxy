@@ -59,6 +59,12 @@ spec:
         description: A fully-qualified certificates URL reference. The proxy presents a Certificate (selected based on SNI) when establishing a TLS connection.
         varType: list(string)
         required: true
+        connections:
+          - source:
+              source: github.com/GoogleCloudPlatform/terraform-google-secret-manager//modules/simple-secret
+              version: ">= 0.5.1"
+            spec:
+              outputExpr: "[env_vars.SECRET]"
       - name: network
         description: URI of the subnetwork for which this secure web proxy will be created.
         varType: string
