@@ -90,7 +90,7 @@ variable "rules" {
     basic_profile       = optional(string, "ALLOW") # Supports ALLOW or DENY.string
   }))
   description = "Security policy rules configuration."
-  default     = null
+  default     = {}
 }
 
 variable "url_lists" {
