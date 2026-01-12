@@ -64,7 +64,7 @@ spec:
               source: github.com/GoogleCloudPlatform/terraform-google-secret-manager//modules/simple-secret
               version: ">= 0.5.1"
             spec:
-              outputExpr: "[env_vars.SECRET]"
+              outputExpr: "[env_vars.SECRET.secret]"
       - name: network
         description: URI of the subnetwork for which this secure web proxy will be created.
         varType: string
