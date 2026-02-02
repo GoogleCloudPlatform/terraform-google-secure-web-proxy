@@ -41,10 +41,39 @@ variable "scope" {
   default     = ""
 }
 
+variable "next_hop_routing_mode" {
+  type        = bool
+  description = "Enable NEXT_HOP_ROUTING_MODE for the gateway."
+  default     = false
+}
+
+variable "description" {
+  description = "Optional description for the created resources."
+  type        = string
+  default     = "Managed by Terraform."
+}
+
 variable "certificate_urls" {
   type        = list(string)
   description = "A fully-qualified certificates URL reference. The proxy presents a Certificate (selected based on SNI) when establishing a TLS connection."
+  default     = []
 }
+
+variable "service_attachment" {
+  description = "PSC service attachment configuration."
+  type = object({
+    nat_subnets                      = list(string)
+    automatic_accept_all_connections = optional(bool, true)
+    consumer_accept_lists            = optional(map(string), {})
+    consumer_reject_lists            = optional(list(string))
+    description                      = optional(string)
+    domain_name                      = optional(string)
+    enable_proxy_protocol            = optional(bool, false)
+    reconcile_connections            = optional(bool)
+  })
+  default = null
+}
+
 
 variable "network" {
   type        = string
@@ -71,7 +100,7 @@ variable "labels" {
 variable "policy" {
   type = object({
     name        = string
-    description = string
+    description = optional(string)
     tls_inspection_policy = optional(object({
       name    = string
       ca_pool = string
@@ -89,7 +118,7 @@ variable "rules" {
     application_matcher = optional(string)
     basic_profile       = optional(string, "ALLOW") # Supports ALLOW or DENY.string
   }))
-  description = "Security policy rules configuration."
+  description = "Security policy rules configuration. Learn more about attributes and  operators for session_matcher and application_matcher from [documentation](https://docs.cloud.google.com/secure-web-proxy/docs/cel-matcher-language-reference?_gl=1*1nx6etf*_ga*MTM4OTEwOTE5NC4xNzcwMDUxOTcz*_ga_WH2QY8WWF5*czE3NzAwNTUxNDUkbzE3JGcxJHQxNzcwMDU1OTUwJGo2MCRsMCRoMA..#attributes-available-only-to-applicationmatcher)"
   default     = {}
 }
 

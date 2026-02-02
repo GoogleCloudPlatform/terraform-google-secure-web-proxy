@@ -33,3 +33,8 @@ output "url_list_ids" {
   description = "Identifiers of the secure web proxy url lists."
   value       = { for list_name, _ in var.url_lists : list_name => google_network_security_url_lists.this[list_name].id }
 }
+
+output "service_attachment_id" {
+  description = "ID of the service attachment resource, if created."
+  value       = try(google_compute_service_attachment.default[0].id, null)
+}

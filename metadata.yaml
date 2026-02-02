@@ -55,10 +55,31 @@ spec:
         description: Scope determines how configuration across multiple gateway instances are merged. The configuration for multiple gateway instances with the same scope will be merged as presented as a single coniguration to the proxy. Defaults to name of the region. Max length - 64 characters.
         varType: string
         defaultValue: ""
+      - name: next_hop_routing_mode
+        description: Enable NEXT_HOP_ROUTING_MODE for the gateway.
+        varType: bool
+        defaultValue: false
+      - name: description
+        description: Optional description for the created resources.
+        varType: string
+        defaultValue: Managed by Terraform.
       - name: certificate_urls
         description: A fully-qualified certificates URL reference. The proxy presents a Certificate (selected based on SNI) when establishing a TLS connection.
         varType: list(string)
-        required: true
+        defaultValue: []
+      - name: service_attachment
+        description: PSC service attachment configuration.
+        varType: |-
+          object({
+              nat_subnets                      = list(string)
+              automatic_accept_all_connections = optional(bool, true)
+              consumer_accept_lists            = optional(map(string), {})
+              consumer_reject_lists            = optional(list(string))
+              description                      = optional(string)
+              domain_name                      = optional(string)
+              enable_proxy_protocol            = optional(bool, false)
+              reconcile_connections            = optional(bool)
+            })
       - name: network
         description: URI of the subnetwork for which this secure web proxy will be created.
         varType: string
@@ -80,7 +101,7 @@ spec:
         varType: |-
           object({
               name        = string
-              description = string
+              description = optional(string)
               tls_inspection_policy = optional(object({
                 name    = string
                 ca_pool = string
@@ -88,7 +109,7 @@ spec:
             })
         required: true
       - name: rules
-        description: Security policy rules configuration.
+        description: Security policy rules configuration. Learn more about attributes and  operators for session_matcher and application_matcher from [documentation](https://docs.cloud.google.com/secure-web-proxy/docs/cel-matcher-language-reference?_gl=1*1nx6etf*_ga*MTM4OTEwOTE5NC4xNzcwMDUxOTcz*_ga_WH2QY8WWF5*czE3NzAwNTUxNDUkbzE3JGcxJHQxNzcwMDU1OTUwJGo2MCRsMCRoMA..#attributes-available-only-to-applicationmatcher)
         varType: |-
           map(object({
               enabled             = optional(bool, true)
@@ -119,6 +140,8 @@ spec:
         type:
           - object
           - {}
+      - name: service_attachment_id
+        description: ID of the service attachment resource, if created.
       - name: url_list_ids
         description: Identifiers of the secure web proxy url lists.
         type:

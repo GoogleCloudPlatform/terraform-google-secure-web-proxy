@@ -65,17 +65,20 @@ Functional examples are included in the
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
-| certificate\_urls | A fully-qualified certificates URL reference. The proxy presents a Certificate (selected based on SNI) when establishing a TLS connection. | `list(string)` | n/a | yes |
+| certificate\_urls | A fully-qualified certificates URL reference. The proxy presents a Certificate (selected based on SNI) when establishing a TLS connection. | `list(string)` | `[]` | no |
 | delete\_swg\_autogen\_router\_on\_destroy | boolean option to also delete auto generated router by the gateway creation. | `bool` | `true` | no |
+| description | Optional description for the created resources. | `string` | `"Managed by Terraform."` | no |
 | gateway\_name | The name of secure web proxy gateway to be created. | `string` | n/a | yes |
 | ip\_address | Static IP reservation for SWP. When no address is provided, an IP from the input subnetwork is allocated. | `string` | `""` | no |
 | labels | Map of labels for secure web proxy gateway. | `map(string)` | `{}` | no |
 | network | URI of the subnetwork for which this secure web proxy will be created. | `string` | n/a | yes |
-| policy | Gateway security policy configuration. | <pre>object({<br>    name        = string<br>    description = string<br>    tls_inspection_policy = optional(object({<br>      name    = string<br>      ca_pool = string<br>    }))<br>  })</pre> | n/a | yes |
+| next\_hop\_routing\_mode | Enable NEXT\_HOP\_ROUTING\_MODE for the gateway. | `bool` | `false` | no |
+| policy | Gateway security policy configuration. | <pre>object({<br>    name        = string<br>    description = optional(string)<br>    tls_inspection_policy = optional(object({<br>      name    = string<br>      ca_pool = string<br>    }))<br>  })</pre> | n/a | yes |
 | project\_id | The Google Cloud project ID where the secure web proxy will be deployed. | `string` | n/a | yes |
 | region | The region in which the secure web proxy components will be created. | `string` | n/a | yes |
-| rules | Security policy rules configuration. | <pre>map(object({<br>    enabled             = optional(bool, true)<br>    description         = optional(string, "SWP rules created by terraform")<br>    priority            = number                                                # Lower number corresponds to higher precedence.<br>    session_matcher     = optional(string, "inIpRange(source.ip, '0.0.0.0/0')") # By default, open all source ips.<br>    application_matcher = optional(string)<br>    basic_profile       = optional(string, "ALLOW") # Supports ALLOW or DENY.string<br>  }))</pre> | `{}` | no |
+| rules | Security policy rules configuration. Learn more about attributes and  operators for session\_matcher and application\_matcher from [documentation](https://docs.cloud.google.com/secure-web-proxy/docs/cel-matcher-language-reference?_gl=1*1nx6etf*_ga*MTM4OTEwOTE5NC4xNzcwMDUxOTcz*_ga_WH2QY8WWF5*czE3NzAwNTUxNDUkbzE3JGcxJHQxNzcwMDU1OTUwJGo2MCRsMCRoMA..#attributes-available-only-to-applicationmatcher) | <pre>map(object({<br>    enabled             = optional(bool, true)<br>    description         = optional(string, "SWP rules created by terraform")<br>    priority            = number                                                # Lower number corresponds to higher precedence.<br>    session_matcher     = optional(string, "inIpRange(source.ip, '0.0.0.0/0')") # By default, open all source ips.<br>    application_matcher = optional(string)<br>    basic_profile       = optional(string, "ALLOW") # Supports ALLOW or DENY.string<br>  }))</pre> | `{}` | no |
 | scope | Scope determines how configuration across multiple gateway instances are merged. The configuration for multiple gateway instances with the same scope will be merged as presented as a single coniguration to the proxy. Defaults to name of the region. Max length - 64 characters. | `string` | `""` | no |
+| service\_attachment | PSC service attachment configuration. | <pre>object({<br>    nat_subnets                      = list(string)<br>    automatic_accept_all_connections = optional(bool, true)<br>    consumer_accept_lists            = optional(map(string), {})<br>    consumer_reject_lists            = optional(list(string))<br>    description                      = optional(string)<br>    domain_name                      = optional(string)<br>    enable_proxy_protocol            = optional(bool, false)<br>    reconcile_connections            = optional(bool)<br>  })</pre> | `null` | no |
 | subnetwork | URI of the subnetwork for which this secure web proxy will be created. | `string` | n/a | yes |
 | url\_lists | URL lists that can be used within SWP rules. Attribute values supports: FQDNs and URLs. | <pre>map(object({<br>    description = optional(string, "URL lists created by terraform")<br>    values      = list(string)<br>  }))</pre> | `{}` | no |
 
@@ -86,6 +89,7 @@ Functional examples are included in the
 | gateway\_id | Identifier for the secure web proxy gateway. |
 | policy\_id | Identifier of the secure web proxy gateway policy. |
 | rule\_ids | Identifiers of the secure web proxy rules created. |
+| service\_attachment\_id | ID of the service attachment resource, if created. |
 | url\_list\_ids | Identifiers of the secure web proxy url lists. |
 
 <!-- END OF PRE-COMMIT-TERRAFORM DOCS HOOK -->

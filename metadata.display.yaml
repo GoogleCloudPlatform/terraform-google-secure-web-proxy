@@ -33,6 +33,9 @@ spec:
         delete_swg_autogen_router_on_destroy:
           name: delete_swg_autogen_router_on_destroy
           title: Delete Swg Autogen Router On Destroy
+        description:
+          name: description
+          title: Description
         gateway_name:
           name: gateway_name
           title: Gateway Name
@@ -47,6 +50,9 @@ spec:
         network:
           name: network
           title: Network
+        next_hop_routing_mode:
+          name: next_hop_routing_mode
+          title: Next Hop Routing Mode
         policy:
           name: policy
           title: Policy
@@ -82,6 +88,9 @@ spec:
         scope:
           name: scope
           title: Scope
+        service_attachment:
+          name: service_attachment
+          title: Service Attachment
         subnetwork:
           name: subnetwork
           title: Subnetwork

@@ -18,17 +18,51 @@
 resource "google_network_services_gateway" "this" {
   name                                 = var.gateway_name
   project                              = var.project_id
+  description                          = var.description
   location                             = var.region
   addresses                            = var.ip_address != "" ? [var.ip_address] : null # Only supports 0 or 1 IP address.
   type                                 = "SECURE_WEB_GATEWAY"
   labels                               = var.labels
   ports                                = [443] # Gateways of type 'SECURE_WEB_GATEWAY' are limited to 1 port.
+  routing_mode                         = var.next_hop_routing_mode ? "NEXT_HOP_ROUTING_MODE" : null
   scope                                = var.scope != "" ? var.scope : var.region
   certificate_urls                     = var.certificate_urls
   gateway_security_policy              = google_network_security_gateway_security_policy.this.id
   network                              = var.network
   subnetwork                           = var.subnetwork
   delete_swg_autogen_router_on_destroy = var.delete_swg_autogen_router_on_destroy
+}
+
+# Optional PSC Service Attachment
+resource "google_compute_service_attachment" "default" {
+  count          = var.service_attachment == null ? 0 : 1
+  project        = var.project_id
+  region         = var.region
+  name           = var.gateway_name
+  description    = coalesce(var.service_attachment.description, "Service attachment for SWP ${var.gateway_name}")
+  target_service = google_network_services_gateway.this.self_link
+  nat_subnets    = var.service_attachment.nat_subnets
+  connection_preference = (
+    var.service_attachment.automatic_accept_all_connections
+    ? "ACCEPT_AUTOMATIC"
+    : "ACCEPT_MANUAL"
+  )
+  consumer_reject_lists = var.service_attachment.consumer_reject_lists
+  domain_names = (
+    var.service_attachment.domain_name == null
+    ? null
+    : [var.service_attachment.domain_name]
+  )
+  enable_proxy_protocol = var.service_attachment.enable_proxy_protocol
+  reconcile_connections = var.service_attachment.reconcile_connections
+  dynamic "consumer_accept_lists" {
+    for_each = var.service_attachment.consumer_accept_lists
+    iterator = accept
+    content {
+      project_id_or_num = accept.key
+      connection_limit  = accept.value
+    }
+  }
 }
 
 # Gateway Security Policy
@@ -57,6 +91,13 @@ resource "google_network_security_gateway_security_policy_rule" "this" {
   depends_on = [
     google_network_security_url_lists.this
   ]
+  lifecycle {
+    # add a trigger to recreate rules, if the policy is replaced
+    # because it is referenced by name, this won't happen automatically, as it would, if referenced by id
+    replace_triggered_by = [
+      google_network_security_gateway_security_policy.this.id
+    ]
+  }
 }
 
 # TLS Inspection Policy
