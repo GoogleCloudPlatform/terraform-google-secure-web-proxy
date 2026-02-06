@@ -73,6 +73,9 @@ resource "google_network_security_gateway_security_policy" "this" {
   location              = var.region
   description           = lookup(var.policy, "description", "Policy for SWP gateway - ${var.gateway_name}")
   tls_inspection_policy = lookup(var.policy, "tls_inspection_policy", null) != null ? google_network_security_tls_inspection_policy.this[0].id : null
+  lifecycle {
+    create_before_destroy = true
+  }
 }
 
 # Gateway Security Policy Rules
