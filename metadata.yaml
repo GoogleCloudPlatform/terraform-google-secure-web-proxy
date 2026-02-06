@@ -72,12 +72,12 @@ spec:
         varType: |-
           object({
               nat_subnets                      = list(string)
-              automatic_accept_all_connections = optional(bool, true)
-              consumer_accept_lists            = optional(map(string), {})
+              automatic_accept_all_connections = optional(bool)
+              consumer_accept_lists            = optional(list(string))
               consumer_reject_lists            = optional(list(string))
               description                      = optional(string)
               domain_name                      = optional(string)
-              enable_proxy_protocol            = optional(bool, false)
+              enable_proxy_protocol            = optional(bool)
               reconcile_connections            = optional(bool)
             })
       - name: network
