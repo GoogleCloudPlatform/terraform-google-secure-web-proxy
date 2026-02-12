@@ -101,3 +101,11 @@ spec:
       outputs:
         gateway_id:
           visibility: VISIBILITY_ROOT
+        policy_id:
+          visibility: VISIBILITY_ROOT
+        rule_ids:
+          visibility: VISIBILITY_ROOT
+        service_attachment_id:
+          visibility: VISIBILITY_ROOT
+        url_list_ids:
+          visibility: VISIBILITY_ROOT
