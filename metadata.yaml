@@ -24,7 +24,7 @@ spec:
     source:
       repo: https://github.com/GoogleCloudPlatform/terraform-google-secure-web-proxy.git
       sourceType: git
-    version: 1.0.1
+    version: 1.0.2
     actuationTool:
       flavor: Terraform
       version: ">= 1.3.0"
@@ -160,16 +160,31 @@ spec:
       - name: gateway_id
         description: Identifier for the secure web proxy gateway.
         type: string
+      - name: gateway_ip_addresses
+        description: The IP addresses assigned to the Secure Web Proxy gateway.
+        type: string
+      - name: network
+        description: The VPC network associated with the gateway.
+        type: string
       - name: policy_id
         description: Identifier of the secure web proxy gateway policy.
+        type: string
+      - name: project_id
+        description: The project ID where the Secure Web Proxy is deployed.
         type: string
       - name: rule_ids
         description: Identifiers of the secure web proxy rules created.
         type:
           - object
           - {}
+      - name: self_link
+        description: The URI of the created resource.
+        type: string
       - name: service_attachment_id
         description: ID of the service attachment resource, if created.
+      - name: subnetwork
+        description: The specific subnetwork used by the gateway.
+        type: string
       - name: url_list_ids
         description: Identifiers of the secure web proxy url lists.
         type:

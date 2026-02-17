@@ -88,9 +88,14 @@ Functional examples are included in the
 | Name | Description |
 |------|-------------|
 | gateway\_id | Identifier for the secure web proxy gateway. |
+| gateway\_ip\_addresses | The IP addresses assigned to the Secure Web Proxy gateway. |
+| network | The VPC network associated with the gateway. |
 | policy\_id | Identifier of the secure web proxy gateway policy. |
+| project\_id | The project ID where the Secure Web Proxy is deployed. |
 | rule\_ids | Identifiers of the secure web proxy rules created. |
+| self\_link | The URI of the created resource. |
 | service\_attachment\_id | ID of the service attachment resource, if created. |
+| subnetwork | The specific subnetwork used by the gateway. |
 | url\_list\_ids | Identifiers of the secure web proxy url lists. |
 
 <!-- END OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
