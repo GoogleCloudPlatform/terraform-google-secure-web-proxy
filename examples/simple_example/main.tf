@@ -15,7 +15,7 @@
  */
 
 module "secure_web_proxy" {
-  source = "Daisyprakash/secure-web-proxy/google"
+  source = "../.."
 
   gateway_name     = "simple-swp"
   project_id       = var.project_id
