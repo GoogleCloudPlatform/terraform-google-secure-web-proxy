@@ -38,3 +38,28 @@ output "service_attachment_id" {
   description = "ID of the service attachment resource, if created."
   value       = try(google_compute_service_attachment.default[0].id, null)
 }
+
+output "project_id" {
+  description = "The project ID where the Secure Web Proxy is deployed."
+  value       = google_network_services_gateway.this.project
+}
+
+output "gateway_ip_addresses" {
+  description = "The IP addresses assigned to the Secure Web Proxy gateway."
+  value       = google_network_services_gateway.this.addresses
+}
+
+output "network" {
+  description = "The VPC network associated with the gateway."
+  value       = google_network_services_gateway.this.network
+}
+
+output "subnetwork" {
+  description = "The specific subnetwork used by the gateway."
+  value       = google_network_services_gateway.this.subnetwork
+}
+
+output "self_link" {
+  description = "The URI of the created resource."
+  value       = google_network_services_gateway.this.self_link
+}

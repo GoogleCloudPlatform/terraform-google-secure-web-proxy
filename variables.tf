@@ -77,12 +77,23 @@ variable "service_attachment" {
 
 variable "network" {
   type        = string
-  description = "URI of the subnetwork for which this secure web proxy will be created."
+  description = "URI of the network for which this secure web proxy will be created."
 }
 
 variable "subnetwork" {
   type        = string
-  description = "URI of the subnetwork for which this secure web proxy will be created."
+  description = "URI of the subnetwork for which this secure web proxy will be created. If empty, the module will attempt to find a suitable subnetwork from the `subnets` map."
+  default     = ""
+}
+
+variable "subnets" {
+  description = "Optional: A map containing subnet details Used to derive the subnetwork URI if subnetwork is not provided."
+  type = list(object({
+    id      = string
+    region  = string
+    purpose = string
+  }))
+  default = []
 }
 
 variable "delete_swg_autogen_router_on_destroy" {

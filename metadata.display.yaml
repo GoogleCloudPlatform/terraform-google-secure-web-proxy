@@ -91,6 +91,9 @@ spec:
         service_attachment:
           name: service_attachment
           title: Service Attachment
+        subnets:
+          name: subnets
+          title: Subnets
         subnetwork:
           name: subnetwork
           title: Subnetwork
@@ -108,4 +111,14 @@ spec:
         service_attachment_id:
           visibility: VISIBILITY_ROOT
         url_list_ids:
+          visibility: VISIBILITY_ROOT
+        project_id:
+          visibility: VISIBILITY_ROOT
+        gateway_ip_addresses:
+          visibility: VISIBILITY_ROOT
+        network:
+          visibility: VISIBILITY_ROOT
+        subnetwork:
+          visibility: VISIBILITY_ROOT
+        self_link:
           visibility: VISIBILITY_ROOT
