@@ -110,6 +110,8 @@ spec:
           visibility: VISIBILITY_ROOT
         policy_id:
           visibility: VISIBILITY_ROOT
+        ports:
+          visibility: VISIBILITY_ROOT
         project_id:
           visibility: VISIBILITY_ROOT
         rule_ids:

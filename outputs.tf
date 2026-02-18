@@ -63,3 +63,8 @@ output "self_link" {
   description = "The URI of the created resource."
   value       = google_network_services_gateway.this.self_link
 }
+
+output "ports" {
+  description = "Ports of the secure web proxy resource created."
+  value       = google_network_services_gateway.this.ports
+}

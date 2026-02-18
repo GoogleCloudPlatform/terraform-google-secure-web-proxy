@@ -24,7 +24,7 @@ spec:
     source:
       repo: https://github.com/GoogleCloudPlatform/terraform-google-secure-web-proxy.git
       sourceType: git
-    version: 0.1.1
+    version: 1.0.3
     actuationTool:
       flavor: Terraform
       version: ">= 1.3.0"
@@ -71,9 +71,10 @@ spec:
         description: PSC service attachment configuration.
         varType: |-
           object({
+              name                             = string
               nat_subnets                      = list(string)
               automatic_accept_all_connections = optional(bool)
-              consumer_accept_lists            = optional(list(string))
+              consumer_accept_lists            = optional(map(string), {})
               consumer_reject_lists            = optional(list(string))
               description                      = optional(string)
               domain_name                      = optional(string)
@@ -169,6 +170,11 @@ spec:
       - name: policy_id
         description: Identifier of the secure web proxy gateway policy.
         type: string
+      - name: ports
+        description: Ports of the secure web proxy resource created.
+        type:
+          - list
+          - string
       - name: project_id
         description: The project ID where the Secure Web Proxy is deployed.
         type: string

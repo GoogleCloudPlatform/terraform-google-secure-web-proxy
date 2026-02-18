@@ -62,9 +62,10 @@ variable "certificate_urls" {
 variable "service_attachment" {
   description = "PSC service attachment configuration."
   type = object({
+    name                             = string
     nat_subnets                      = list(string)
     automatic_accept_all_connections = optional(bool)
-    consumer_accept_lists            = optional(list(string))
+    consumer_accept_lists            = optional(map(string), {})
     consumer_reject_lists            = optional(list(string))
     description                      = optional(string)
     domain_name                      = optional(string)

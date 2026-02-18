@@ -47,7 +47,7 @@ resource "google_compute_service_attachment" "default" {
   count          = var.service_attachment == null ? 0 : 1
   project        = var.project_id
   region         = var.region
-  name           = var.gateway_name
+  name           = var.service_attachment.name
   description    = coalesce(var.service_attachment.description, "Service attachment for SWP ${var.gateway_name}")
   target_service = google_network_services_gateway.this.self_link
   nat_subnets    = var.service_attachment.nat_subnets
