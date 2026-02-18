@@ -51,11 +51,11 @@ resource "google_compute_service_attachment" "default" {
   description    = coalesce(var.service_attachment.description, "Service attachment for SWP ${var.gateway_name}")
   target_service = google_network_services_gateway.this.self_link
   nat_subnets = distinct(concat(
-    var.service_attachment.nat_subnets,
+    coalesce(var.service_attachment.nat_subnets, []),
     [for s in var.subnets : s.id if s.region == var.region && s.purpose == "PRIVATE_SERVICE_CONNECT"]
   ))
   connection_preference = (
-    try(var.service_attachment.automatic_accept_all_connections, false)
+    coalesce(var.service_attachment.automatic_accept_all_connections, false)
     ? "ACCEPT_AUTOMATIC"
     : "ACCEPT_MANUAL"
   )
@@ -65,8 +65,8 @@ resource "google_compute_service_attachment" "default" {
     ? null
     : [var.service_attachment.domain_name]
   )
-  enable_proxy_protocol = try(var.service_attachment.enable_proxy_protocol, false)
-  reconcile_connections = try(var.service_attachment.reconcile_connections, false)
+  enable_proxy_protocol = coalesce(var.service_attachment.enable_proxy_protocol, false)
+  reconcile_connections = coalesce(var.service_attachment.reconcile_connections, false)
   dynamic "consumer_accept_lists" {
     for_each = var.service_attachment.consumer_accept_lists
     iterator = accept
