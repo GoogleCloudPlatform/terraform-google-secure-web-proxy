@@ -24,7 +24,7 @@ spec:
     source:
       repo: https://github.com/GoogleCloudPlatform/terraform-google-secure-web-proxy.git
       sourceType: git
-    version: 1.0.3
+    version: 0.1.4
     actuationTool:
       flavor: Terraform
       version: ">= 1.3.0"
@@ -73,12 +73,12 @@ spec:
           object({
               name                             = string
               nat_subnets                      = list(string)
-              automatic_accept_all_connections = optional(bool)
+              automatic_accept_all_connections = optional(bool, false)
               consumer_accept_lists            = optional(map(string), {})
               consumer_reject_lists            = optional(list(string))
               description                      = optional(string)
               domain_name                      = optional(string)
-              enable_proxy_protocol            = optional(bool)
+              enable_proxy_protocol            = optional(bool, false)
               reconcile_connections            = optional(bool)
             })
       - name: network

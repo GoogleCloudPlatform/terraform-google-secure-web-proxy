@@ -64,12 +64,12 @@ variable "service_attachment" {
   type = object({
     name                             = string
     nat_subnets                      = list(string)
-    automatic_accept_all_connections = optional(bool)
+    automatic_accept_all_connections = optional(bool, false)
     consumer_accept_lists            = optional(map(string), {})
     consumer_reject_lists            = optional(list(string))
     description                      = optional(string)
     domain_name                      = optional(string)
-    enable_proxy_protocol            = optional(bool)
+    enable_proxy_protocol            = optional(bool, false)
     reconcile_connections            = optional(bool)
   })
   default = null
