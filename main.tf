@@ -55,7 +55,7 @@ resource "google_compute_service_attachment" "default" {
     [for s in var.subnets : s.id if s.region == var.region && s.purpose == "PRIVATE_SERVICE_CONNECT"]
   ))
   connection_preference = (
-    var.service_attachment.automatic_accept_all_connections
+    try(var.service_attachment.automatic_accept_all_connections, false)
     ? "ACCEPT_AUTOMATIC"
     : "ACCEPT_MANUAL"
   )
@@ -65,8 +65,8 @@ resource "google_compute_service_attachment" "default" {
     ? null
     : [var.service_attachment.domain_name]
   )
-  enable_proxy_protocol = var.service_attachment.enable_proxy_protocol
-  reconcile_connections = var.service_attachment.reconcile_connections
+  enable_proxy_protocol = try(var.service_attachment.enable_proxy_protocol, false)
+  reconcile_connections = try(var.service_attachment.reconcile_connections, false)
   dynamic "consumer_accept_lists" {
     for_each = var.service_attachment.consumer_accept_lists
     iterator = accept
