@@ -8,6 +8,13 @@ and this project adheres to
 [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 This changelog is generated automatically based on [Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/).
 
+## [0.2.0](https://github.com/GoogleCloudPlatform/terraform-google-secure-web-proxy/compare/v0.1.1...v0.2.0) (2026-02-19)
+
+
+### Features
+
+* **deps:** Update Terraform Google Provider to v7 (major) ([#21](https://github.com/GoogleCloudPlatform/terraform-google-secure-web-proxy/issues/21)) ([741144a](https://github.com/GoogleCloudPlatform/terraform-google-secure-web-proxy/commit/741144a54805a9cd08d8b943a099c637d1ad9b1d))
+
 ## [0.1.1](https://github.com/GoogleCloudPlatform/terraform-google-secure-web-proxy/compare/v0.1.0...v0.1.1) (2025-12-11)
 
 
