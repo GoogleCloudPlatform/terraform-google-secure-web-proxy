@@ -1,0 +1,126 @@
+# Copyright 2026 Google LLC
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#      http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+apiVersion: blueprints.cloud.google.com/v1alpha1
+kind: BlueprintMetadata
+metadata:
+  name: terraform-google-secure-web-proxy-display
+  annotations:
+    config.kubernetes.io/local-config: "true"
+spec:
+  info:
+    title: terraform-google-secure-web-proxy
+    source:
+      repo: https://github.com/GoogleCloudPlatform/terraform-google-secure-web-proxy.git
+      sourceType: git
+  ui:
+    input:
+      variables:
+        certificate_urls:
+          name: certificate_urls
+          title: Certificate Urls
+        delete_swg_autogen_router_on_destroy:
+          name: delete_swg_autogen_router_on_destroy
+          title: Delete Swg Autogen Router On Destroy
+        description:
+          name: description
+          title: Description
+        gateway_name:
+          name: gateway_name
+          title: Gateway Name
+          regexValidation: ^[a-z](?:[a-z0-9-]{0,61}[a-z0-9])?$
+          validation: Gateway name must start with a lowercase letter followed by up to 62 lowercase letters, numbers, or hyphens and cannot end with a hyphen.
+        ip_address:
+          name: ip_address
+          title: Ip Address
+        labels:
+          name: labels
+          title: Labels
+        network:
+          name: network
+          title: Network
+        next_hop_routing_mode:
+          name: next_hop_routing_mode
+          title: Next Hop Routing Mode
+        policy:
+          name: policy
+          title: Policy
+          properties:
+            name:
+              name: name
+              title: Name
+              regexValidation: ^[a-z](?:[a-z0-9-]{0,61}[a-z0-9])?$
+              validation: Policy name must start with a lowercase letter followed by up to 62 lowercase letters, numbers, or hyphens and cannot end with a hyphen.
+        project_id:
+          name: project_id
+          title: Project Id
+        region:
+          name: region
+          title: Region
+        rules:
+          name: rules
+          title: Rules
+          properties:
+            basic_profile:
+              name: basic_profile
+              title: Basic profile
+              enumValueLabels:
+                - label: ALLOW
+                  value: ALLOW
+                - label: DENY
+                  value: DENY
+            priority:
+              name: priority
+              title: Priority
+              min: 0
+              max: 2147483647
+        scope:
+          name: scope
+          title: Scope
+        service_attachment:
+          name: service_attachment
+          title: Service Attachment
+        subnets:
+          name: subnets
+          title: Subnets
+        subnetwork:
+          name: subnetwork
+          title: Subnetwork
+        url_lists:
+          name: url_lists
+          title: Url Lists
+    runtime:
+      outputs:
+        gateway_id:
+          visibility: VISIBILITY_ROOT
+        gateway_ip_addresses:
+          visibility: VISIBILITY_ROOT
+        network:
+          visibility: VISIBILITY_ROOT
+        policy_id:
+          visibility: VISIBILITY_ROOT
+        ports:
+          visibility: VISIBILITY_ROOT
+        project_id:
+          visibility: VISIBILITY_ROOT
+        rule_ids:
+          visibility: VISIBILITY_ROOT
+        self_link:
+          visibility: VISIBILITY_ROOT
+        service_attachment_id:
+          visibility: VISIBILITY_ROOT
+        subnetwork:
+          visibility: VISIBILITY_ROOT
+        url_list_ids:
+          visibility: VISIBILITY_ROOT
