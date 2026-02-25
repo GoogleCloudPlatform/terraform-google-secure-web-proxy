@@ -8,6 +8,13 @@ and this project adheres to
 [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 This changelog is generated automatically based on [Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/).
 
+## [0.2.1](https://github.com/GoogleCloudPlatform/terraform-google-secure-web-proxy/compare/v0.2.0...v0.2.1) (2026-02-25)
+
+
+### Bug Fixes
+
+* updated connection details with vpc module ([#40](https://github.com/GoogleCloudPlatform/terraform-google-secure-web-proxy/issues/40)) ([d66ba0e](https://github.com/GoogleCloudPlatform/terraform-google-secure-web-proxy/commit/d66ba0ecd64a5345a4b038f3ae3153f13ef8e51e))
+
 ## [0.2.0](https://github.com/GoogleCloudPlatform/terraform-google-secure-web-proxy/compare/v0.1.1...v0.2.0) (2026-02-24)
 
 
