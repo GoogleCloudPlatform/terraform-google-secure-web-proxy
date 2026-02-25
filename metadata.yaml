@@ -87,8 +87,8 @@ spec:
         required: true
         connections:
           - source:
-              source: github.com/Daisyprakash/terraform-google-network
-              version: ">= 15.2.0"
+              source: github.com/terraform-google-modules/terraform-google-network
+              version: ">= 16.0.1"
             spec:
               outputExpr: network_id
       - name: subnetwork
@@ -106,8 +106,8 @@ spec:
         defaultValue: []
         connections:
           - source:
-              source: github.com/Daisyprakash/terraform-google-network
-              version: ">= 15.2.1"
+              source: github.com/terraform-google-modules/terraform-google-network
+              version: ">= 16.0.1"
             spec:
               outputExpr: subnets_by_region_purpose
       - name: delete_swg_autogen_router_on_destroy
@@ -130,13 +130,6 @@ spec:
               }))
             })
         required: true
-        connections:
-          - source:
-              source: github.com/vandnagarggoogle/terraform-google-cas
-              version: ">= 1.0.13"
-            spec:
-              outputExpr: ca_pool_id
-              inputPath: tls_inspection_policy.ca_pool
       - name: rules
         description: Security policy rules configuration. Learn more about attributes and  operators for session_matcher and application_matcher from [documentation](https://docs.cloud.google.com/secure-web-proxy/docs/cel-matcher-language-reference?_gl=1*1nx6etf*_ga*MTM4OTEwOTE5NC4xNzcwMDUxOTcz*_ga_WH2QY8WWF5*czE3NzAwNTUxNDUkbzE3JGcxJHQxNzcwMDU1OTUwJGo2MCRsMCRoMA..#attributes-available-only-to-applicationmatcher)
         varType: |-
