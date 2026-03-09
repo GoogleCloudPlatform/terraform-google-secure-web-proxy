@@ -25,6 +25,10 @@ terraform {
       source  = "hashicorp/google-beta"
       version = ">= 7.13.0, < 8"
     }
+    tls = {
+      source  = "hashicorp/tls"
+      version = ">=4.0.0"
+    }
   }
 
   provider_meta "google" {

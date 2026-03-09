@@ -16,17 +16,20 @@
 
 # Network Services Gateway
 resource "google_network_services_gateway" "this" {
-  name                    = var.gateway_name
-  project                 = var.project_id
-  description             = var.description
-  location                = var.region
-  addresses               = var.ip_address != "" ? [var.ip_address] : null # Only supports 0 or 1 IP address.
-  type                    = "SECURE_WEB_GATEWAY"
-  labels                  = var.labels
-  ports                   = [443] # Gateways of type 'SECURE_WEB_GATEWAY' are limited to 1 port.
-  routing_mode            = var.next_hop_routing_mode ? "NEXT_HOP_ROUTING_MODE" : null
-  scope                   = var.scope != "" ? var.scope : var.region
-  certificate_urls        = var.certificate_urls
+  name         = var.gateway_name
+  project      = var.project_id
+  description  = var.description
+  location     = var.region
+  addresses    = var.ip_address != "" ? [var.ip_address] : null # Only supports 0 or 1 IP address.
+  type         = "SECURE_WEB_GATEWAY"
+  labels       = var.labels
+  ports        = [443] # Gateways of type 'SECURE_WEB_GATEWAY' are limited to 1 port.
+  routing_mode = var.next_hop_routing_mode ? "NEXT_HOP_ROUTING_MODE" : null
+  scope        = var.scope != "" ? var.scope : var.region
+  certificate_urls = concat(
+    var.certificate_urls,
+    var.certificate_config != null ? [google_certificate_manager_certificate.this[0].id] : []
+  )
   gateway_security_policy = google_network_security_gateway_security_policy.this.id
   network                 = var.network
   subnetwork = (
@@ -40,6 +43,7 @@ resource "google_network_services_gateway" "this" {
     )
   )
   delete_swg_autogen_router_on_destroy = var.delete_swg_autogen_router_on_destroy
+  depends_on                           = [google_certificate_manager_certificate.this]
 }
 
 # Optional PSC Service Attachment
@@ -133,4 +137,71 @@ resource "google_network_security_url_lists" "this" {
   location    = var.region
   description = each.value.description
   values      = each.value.values
+}
+
+resource "tls_private_key" "this" {
+  count = try(var.certificate_config.create_self_signed, null) != null ? 1 : 0
+
+  algorithm   = var.certificate_config.create_self_signed.private_key_config.algorithm
+  ecdsa_curve = var.certificate_config.create_self_signed.private_key_config.ecdsa_curve
+  rsa_bits    = var.certificate_config.create_self_signed.private_key_config.rsa_bits
+}
+
+resource "tls_self_signed_cert" "this" {
+  count = try(var.certificate_config.create_self_signed, null) != null ? 1 : 0
+
+  private_key_pem = tls_private_key.this[0].private_key_pem
+
+  validity_period_hours = var.certificate_config.create_self_signed.validity_period_hours
+  early_renewal_hours   = var.certificate_config.create_self_signed.early_renewal_hours
+  allowed_uses          = var.certificate_config.create_self_signed.allowed_uses
+  is_ca_certificate     = var.certificate_config.create_self_signed.is_ca_certificate
+  set_authority_key_id  = var.certificate_config.create_self_signed.set_authority_key_id
+  set_subject_key_id    = var.certificate_config.create_self_signed.set_subject_key_id
+
+  dns_names    = var.certificate_config.create_self_signed.dns_names
+  ip_addresses = var.certificate_config.create_self_signed.ip_addresses
+  uris         = var.certificate_config.create_self_signed.uris
+
+  dynamic "subject" {
+    for_each = var.certificate_config.create_self_signed.subject != null ? [var.certificate_config.create_self_signed.subject] : []
+    content {
+      common_name  = subject.value.common_name
+      organization = subject.value.organization
+    }
+  }
+}
+
+# --- Main Certificate Resource ---
+resource "google_certificate_manager_certificate" "this" {
+  count = var.certificate_config == null ? 0 : 1
+
+  project     = var.project_id
+  name        = var.certificate_config.name
+  location    = var.region
+  description = var.certificate_config.description
+  labels      = var.certificate_config.labels
+  scope       = var.certificate_config.scope
+
+  dynamic "self_managed" {
+    for_each = (var.certificate_config.existing_self_managed != null || var.certificate_config.create_self_signed != null) ? [1] : []
+    content {
+      # Logic: Use existing PEMs if provided, otherwise use the generated ones from Scenario 3
+      pem_certificate = var.certificate_config.existing_self_managed != null ? var.certificate_config.existing_self_managed.pem_certificate : tls_self_signed_cert.this[0].cert_pem
+      pem_private_key = var.certificate_config.existing_self_managed != null ? var.certificate_config.existing_self_managed.pem_private_key : tls_private_key.this[0].private_key_pem
+    }
+  }
+
+  # Handle Scenario 1 (Google Managed)
+  dynamic "managed" {
+    for_each = var.certificate_config.managed != null ? [var.certificate_config.managed] : []
+    content {
+      domains            = managed.value.domains
+      dns_authorizations = managed.value.dns_authorizations
+      issuance_config    = managed.value.issuance_config
+    }
+  }
+  lifecycle {
+    create_before_destroy = true
+  }
 }

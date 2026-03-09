@@ -65,6 +65,7 @@ Functional examples are included in the
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
+| certificate\_config | Generic configuration for Certificate Manager. Supports Managed, Existing Self-Managed, or Generate Self-Signed. | <pre>object({<br>    name        = string<br>    description = optional(string)<br>    scope       = optional(string)<br>    labels      = optional(map(string))<br>    managed = optional(object({<br>      domains            = optional(list(string))<br>      dns_authorizations = optional(list(string))<br>      issuance_config    = optional(string)<br>    }))<br>    existing_self_managed = optional(object({<br>      pem_certificate = string<br>      pem_private_key = string<br>    }))<br>    create_self_signed = optional(object({<br>      dns_names             = list(string)<br>      validity_period_hours = optional(number, 87600)<br>      early_renewal_hours   = optional(number, 720)<br>      allowed_uses          = optional(list(string), ["key_encipherment", "digital_signature", "server_auth"])<br>      is_ca_certificate     = optional(bool, false)<br>      set_authority_key_id  = optional(bool, false)<br>      set_subject_key_id    = optional(bool, false)<br>      ip_addresses          = optional(list(string))<br>      uris                  = optional(list(string))<br>      subject = optional(object({<br>        common_name  = string<br>        organization = string<br>      }))<br>      private_key_config = optional(object({<br>        algorithm   = optional(string, "ECDSA")<br>        ecdsa_curve = optional(string, "P256")<br>        rsa_bits    = optional(number)<br>      }), {})<br>    }))<br>  })</pre> | `null` | no |
 | certificate\_urls | A fully-qualified certificates URL reference. The proxy presents a Certificate (selected based on SNI) when establishing a TLS connection. | `list(string)` | `[]` | no |
 | delete\_swg\_autogen\_router\_on\_destroy | boolean option to also delete auto generated router by the gateway creation. | `bool` | `true` | no |
 | description | Optional description for the created resources. | `string` | `"Managed by Terraform."` | no |
@@ -87,6 +88,7 @@ Functional examples are included in the
 
 | Name | Description |
 |------|-------------|
+| certificate\_id | The ID of the created certificate in Certificate Manager. |
 | gateway\_id | Identifier for the secure web proxy gateway. |
 | gateway\_ip\_addresses | The IP addresses assigned to the Secure Web Proxy gateway. |
 | network | The VPC network associated with the gateway. |

@@ -27,6 +27,9 @@ spec:
   ui:
     input:
       variables:
+        certificate_config:
+          name: certificate_config
+          title: Certificate Config
         certificate_urls:
           name: certificate_urls
           title: Certificate Urls
@@ -102,6 +105,8 @@ spec:
           title: Url Lists
     runtime:
       outputs:
+        certificate_id:
+          visibility: VISIBILITY_ROOT
         gateway_id:
           visibility: VISIBILITY_ROOT
         gateway_ip_addresses:
