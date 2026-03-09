@@ -24,7 +24,7 @@ spec:
     source:
       repo: https://github.com/GoogleCloudPlatform/terraform-google-secure-web-proxy.git
       sourceType: git
-    version: 2.0.1
+    version: 2.0.2
     actuationTool:
       flavor: Terraform
       version: ">= 1.3.0"
@@ -71,7 +71,7 @@ spec:
         description: PSC service attachment configuration.
         varType: |-
           object({
-              name                             = string
+              name                             = optional(string)
               nat_subnets                      = optional(list(string))
               automatic_accept_all_connections = optional(bool)
               consumer_accept_lists            = optional(map(string), {})
@@ -154,7 +154,7 @@ spec:
         description: Generic configuration for Certificate Manager. Supports Managed, Existing Self-Managed, or Generate Self-Signed.
         varType: |-
           object({
-              name        = string
+              name        = optional(string)
               description = optional(string)
               scope       = optional(string)
               labels      = optional(map(string))

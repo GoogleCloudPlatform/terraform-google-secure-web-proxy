@@ -62,7 +62,7 @@ variable "certificate_urls" {
 variable "service_attachment" {
   description = "PSC service attachment configuration."
   type = object({
-    name                             = string
+    name                             = optional(string)
     nat_subnets                      = optional(list(string))
     automatic_accept_all_connections = optional(bool)
     consumer_accept_lists            = optional(map(string), {})
@@ -146,7 +146,7 @@ variable "url_lists" {
 variable "certificate_config" {
   description = "Generic configuration for Certificate Manager. Supports Managed, Existing Self-Managed, or Generate Self-Signed."
   type = object({
-    name        = string
+    name        = optional(string)
     description = optional(string)
     scope       = optional(string)
     labels      = optional(map(string))
