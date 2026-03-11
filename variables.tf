@@ -62,7 +62,7 @@ variable "certificate_urls" {
 variable "service_attachment" {
   description = "PSC service attachment configuration."
   type = object({
-    name                             = string
+    name                             = optional(string)
     nat_subnets                      = optional(list(string))
     automatic_accept_all_connections = optional(bool)
     consumer_accept_lists            = optional(map(string), {})
@@ -141,4 +141,44 @@ variable "url_lists" {
   }))
   default     = {}
   description = "URL lists that can be used within SWP rules. Attribute values supports: FQDNs and URLs."
+}
+
+variable "certificate_config" {
+  description = "Generic configuration for Certificate Manager. Supports Managed, Existing Self-Managed, or Generate Self-Signed."
+  type = object({
+    name        = optional(string)
+    description = optional(string)
+    scope       = optional(string)
+    labels      = optional(map(string))
+    managed = optional(object({
+      domains            = optional(list(string))
+      dns_authorizations = optional(list(string))
+      issuance_config    = optional(string)
+    }))
+    existing_self_managed = optional(object({
+      pem_certificate = string
+      pem_private_key = string
+    }))
+    create_self_signed = optional(object({
+      dns_names             = list(string)
+      validity_period_hours = optional(number, 87600)
+      early_renewal_hours   = optional(number, 720)
+      allowed_uses          = optional(list(string), ["key_encipherment", "digital_signature", "server_auth"])
+      is_ca_certificate     = optional(bool, false)
+      set_authority_key_id  = optional(bool, false)
+      set_subject_key_id    = optional(bool, false)
+      ip_addresses          = optional(list(string))
+      uris                  = optional(list(string))
+      subject = optional(object({
+        common_name  = string
+        organization = string
+      }))
+      private_key_config = optional(object({
+        algorithm   = optional(string, "ECDSA")
+        ecdsa_curve = optional(string, "P256")
+        rsa_bits    = optional(number)
+      }), {})
+    }))
+  })
+  default = null
 }

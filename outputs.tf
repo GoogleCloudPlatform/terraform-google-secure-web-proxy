@@ -68,3 +68,8 @@ output "ports" {
   description = "Ports of the secure web proxy resource created."
   value       = google_network_services_gateway.this.ports
 }
+
+output "certificate_id" {
+  description = "The ID of the created certificate in Certificate Manager."
+  value       = try(google_certificate_manager_certificate.this[0].id, null)
+}
