@@ -8,6 +8,17 @@ and this project adheres to
 [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 This changelog is generated automatically based on [Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/).
 
+## [0.3.0](https://github.com/GoogleCloudPlatform/terraform-google-secure-web-proxy/compare/v0.2.1...v0.3.0) (2026-03-11)
+
+
+### ⚠ BREAKING CHANGES
+
+* **certificate:** add certificate manager integration and self-signed certificate support ([#42](https://github.com/GoogleCloudPlatform/terraform-google-secure-web-proxy/issues/42))
+
+### Features
+
+* **certificate:** add certificate manager integration and self-signed certificate support ([#42](https://github.com/GoogleCloudPlatform/terraform-google-secure-web-proxy/issues/42)) ([74ab713](https://github.com/GoogleCloudPlatform/terraform-google-secure-web-proxy/commit/74ab713d4807a43ea7e0cad5dcf644cac4a9b8c2))
+
 ## [0.2.1](https://github.com/GoogleCloudPlatform/terraform-google-secure-web-proxy/compare/v0.2.0...v0.2.1) (2026-02-25)
 
 
