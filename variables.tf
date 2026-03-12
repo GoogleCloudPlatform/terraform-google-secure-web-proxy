@@ -123,12 +123,13 @@ variable "policy" {
 
 variable "rules" {
   type = map(object({
-    enabled             = optional(bool, true)
-    description         = optional(string, "SWP rules created by terraform")
-    priority            = number                                                # Lower number corresponds to higher precedence.
-    session_matcher     = optional(string, "inIpRange(source.ip, '0.0.0.0/0')") # By default, open all source ips.
-    application_matcher = optional(string)
-    basic_profile       = optional(string, "ALLOW") # Supports ALLOW or DENY.string
+    enabled                = optional(bool, true)
+    description            = optional(string, "SWP rules created by terraform")
+    priority               = number                                                # Lower number corresponds to higher precedence.
+    session_matcher        = optional(string, "inIpRange(source.ip, '0.0.0.0/0')") # By default, open all source ips.
+    application_matcher    = optional(string)
+    basic_profile          = optional(string, "ALLOW") # Supports ALLOW or DENY.string
+    tls_inspection_enabled = optional(bool, false)
   }))
   description = "Security policy rules configuration. Learn more about attributes and  operators for session_matcher and application_matcher from [documentation](https://docs.cloud.google.com/secure-web-proxy/docs/cel-matcher-language-reference?_gl=1*1nx6etf*_ga*MTM4OTEwOTE5NC4xNzcwMDUxOTcz*_ga_WH2QY8WWF5*czE3NzAwNTUxNDUkbzE3JGcxJHQxNzcwMDU1OTUwJGo2MCRsMCRoMA..#attributes-available-only-to-applicationmatcher)"
   default     = {}
