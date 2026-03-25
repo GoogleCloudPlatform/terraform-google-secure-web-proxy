@@ -133,7 +133,7 @@ spec:
         connections:
           - source:
               source: github.com/GoogleCloudPlatform/terraform-google-certificate-authority-service
-              version: ">= v0.1.0"
+              version: ">= v0.1.1"
             spec:
               outputExpr: ca_pool_id
               inputPath: tls_inspection_policy.ca_pool
