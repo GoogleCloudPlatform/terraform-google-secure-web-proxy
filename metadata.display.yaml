@@ -91,6 +91,9 @@ spec:
         scope:
           name: scope
           title: Scope
+        server_tls_policy_config:
+          name: server_tls_policy_config
+          title: Server Tls Policy Config
         service_attachment:
           name: service_attachment
           title: Service Attachment
@@ -122,6 +125,8 @@ spec:
         rule_ids:
           visibility: VISIBILITY_ROOT
         self_link:
+          visibility: VISIBILITY_ROOT
+        server_tls_policy_id:
           visibility: VISIBILITY_ROOT
         service_attachment_id:
           visibility: VISIBILITY_ROOT

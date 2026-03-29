@@ -16,16 +16,17 @@
 
 # Network Services Gateway
 resource "google_network_services_gateway" "this" {
-  name         = var.gateway_name
-  project      = var.project_id
-  description  = var.description
-  location     = var.region
-  addresses    = var.ip_address != "" ? [var.ip_address] : null # Only supports 0 or 1 IP address.
-  type         = "SECURE_WEB_GATEWAY"
-  labels       = var.labels
-  ports        = [443] # Gateways of type 'SECURE_WEB_GATEWAY' are limited to 1 port.
-  routing_mode = var.next_hop_routing_mode ? "NEXT_HOP_ROUTING_MODE" : null
-  scope        = var.scope != "" ? var.scope : var.region
+  name              = var.gateway_name
+  project           = var.project_id
+  description       = var.description
+  location          = var.region
+  addresses         = var.ip_address != "" ? [var.ip_address] : null # Only supports 0 or 1 IP address.
+  type              = "SECURE_WEB_GATEWAY"
+  labels            = var.labels
+  ports             = [443] # Gateways of type 'SECURE_WEB_GATEWAY' are limited to 1 port.
+  routing_mode      = var.next_hop_routing_mode ? "NEXT_HOP_ROUTING_MODE" : null
+  scope             = var.scope != "" ? var.scope : var.region
+  server_tls_policy = var.server_tls_policy_config != null ? google_network_security_server_tls_policy.this[0].id : null
   certificate_urls = concat(
     var.certificate_urls,
     var.certificate_config != null ? [google_certificate_manager_certificate.this[0].id] : []
@@ -204,5 +205,63 @@ resource "google_certificate_manager_certificate" "this" {
   }
   lifecycle {
     create_before_destroy = true
+  }
+}
+
+# Optional Server TLS policy
+resource "google_network_security_server_tls_policy" "this" {
+  count = var.server_tls_policy_config != null ? 1 : 0
+
+  name        = var.server_tls_policy_config.name
+  description = var.server_tls_policy_config.description
+  location    = var.region
+  project     = var.project_id
+  labels      = var.server_tls_policy_config.labels
+  allow_open  = var.server_tls_policy_config.allow_open
+
+  # Server Certificate Block
+  dynamic "server_certificate" {
+    for_each = var.server_tls_policy_config.server_certificate != null ? [var.server_tls_policy_config.server_certificate] : []
+    content {
+      dynamic "grpc_endpoint" {
+        for_each = server_certificate.value.grpc_endpoint != null ? [server_certificate.value.grpc_endpoint] : []
+        content {
+          target_uri = grpc_endpoint.value.target_uri
+        }
+      }
+      dynamic "certificate_provider_instance" {
+        for_each = server_certificate.value.certificate_provider_instance != null ? [server_certificate.value.certificate_provider_instance] : []
+        content {
+          plugin_instance = certificate_provider_instance.value.plugin_instance
+        }
+      }
+    }
+  }
+
+  # mTLS Policy Block
+  dynamic "mtls_policy" {
+    for_each = var.server_tls_policy_config.mtls_policy != null ? [var.server_tls_policy_config.mtls_policy] : []
+    content {
+      client_validation_mode         = mtls_policy.value.client_validation_mode
+      client_validation_trust_config = mtls_policy.value.client_validation_trust_config
+
+      dynamic "client_validation_ca" {
+        for_each = mtls_policy.value.client_validation_ca != null ? [mtls_policy.value.client_validation_ca] : []
+        content {
+          dynamic "grpc_endpoint" {
+            for_each = client_validation_ca.value.grpc_endpoint != null ? [client_validation_ca.value.grpc_endpoint] : []
+            content {
+              target_uri = grpc_endpoint.value.target_uri
+            }
+          }
+          dynamic "certificate_provider_instance" {
+            for_each = client_validation_ca.value.certificate_provider_instance != null ? [client_validation_ca.value.certificate_provider_instance] : []
+            content {
+              plugin_instance = certificate_provider_instance.value.plugin_instance
+            }
+          }
+        }
+      }
+    }
   }
 }

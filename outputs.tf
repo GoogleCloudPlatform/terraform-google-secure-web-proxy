@@ -73,3 +73,8 @@ output "certificate_id" {
   description = "The ID of the created certificate in Certificate Manager."
   value       = try(google_certificate_manager_certificate.this[0].id, null)
 }
+
+output "server_tls_policy_id" {
+  description = "The unique identifier of the Server TLS Policy."
+  value       = try(google_network_security_server_tls_policy.this[0].id, null)
+}

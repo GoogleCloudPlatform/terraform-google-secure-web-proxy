@@ -183,3 +183,38 @@ variable "certificate_config" {
   })
   default = null
 }
+
+variable "server_tls_policy_config" {
+  description = "Configuration for the Server TLS Policy. Defines how the server authenticates incoming requests."
+  type = object({
+    name        = string
+    description = optional(string)
+    labels      = optional(map(string))
+    allow_open  = optional(bool, true)
+
+    # Defines server identity (public/private keys)
+    server_certificate = optional(object({
+      grpc_endpoint = optional(object({
+        target_uri = string
+      }))
+      certificate_provider_instance = optional(object({
+        plugin_instance = string
+      }))
+    }))
+
+    # Defines Mutual TLS (mTLS) and peer validation
+    mtls_policy = optional(object({
+      client_validation_mode         = optional(string)
+      client_validation_trust_config = optional(string)
+      client_validation_ca = optional(object({
+        grpc_endpoint = optional(object({
+          target_uri = string
+        }))
+        certificate_provider_instance = optional(object({
+          plugin_instance = string
+        }))
+      }))
+    }))
+  })
+  default = null
+}
