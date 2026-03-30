@@ -8,6 +8,18 @@ and this project adheres to
 [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 This changelog is generated automatically based on [Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/).
 
+## [0.4.0](https://github.com/GoogleCloudPlatform/terraform-google-secure-web-proxy/compare/v0.3.1...v0.4.0) (2026-03-30)
+
+
+### Features
+
+* added server tls policy for swp ([#48](https://github.com/GoogleCloudPlatform/terraform-google-secure-web-proxy/issues/48)) ([824713d](https://github.com/GoogleCloudPlatform/terraform-google-secure-web-proxy/commit/824713dc71043e73175b139682d29bc8356acbec))
+
+
+### Bug Fixes
+
+* added connection cas ([#47](https://github.com/GoogleCloudPlatform/terraform-google-secure-web-proxy/issues/47)) ([4e19a72](https://github.com/GoogleCloudPlatform/terraform-google-secure-web-proxy/commit/4e19a721ea67cee6c3aa95ddbf213dc4bd5acea4))
+
 ## [0.3.1](https://github.com/GoogleCloudPlatform/terraform-google-secure-web-proxy/compare/v0.3.0...v0.3.1) (2026-03-16)
 
 
