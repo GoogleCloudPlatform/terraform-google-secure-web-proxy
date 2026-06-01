@@ -114,8 +114,9 @@ variable "policy" {
     name        = string
     description = optional(string)
     tls_inspection_policy = optional(object({
-      name    = string
-      ca_pool = string
+      name         = string
+      ca_pool      = string
+      trust_config = optional(string)
     }))
   })
   description = "Gateway security policy configuration."
