@@ -123,12 +123,13 @@ resource "google_network_security_gateway_security_policy_rule" "this" {
 
 # TLS Inspection Policy
 resource "google_network_security_tls_inspection_policy" "this" {
-  count    = lookup(var.policy, "tls_inspection_policy", null) != null ? 1 : 0
-  provider = google-beta
-  name     = lookup(var.policy.tls_inspection_policy, "name")
-  project  = var.project_id
-  location = var.region
-  ca_pool  = lookup(var.policy.tls_inspection_policy, "ca_pool")
+  count        = lookup(var.policy, "tls_inspection_policy", null) != null ? 1 : 0
+  provider     = google-beta
+  name         = lookup(var.policy.tls_inspection_policy, "name")
+  project      = var.project_id
+  location     = var.region
+  ca_pool      = lookup(var.policy.tls_inspection_policy, "ca_pool")
+  trust_config = lookup(var.policy.tls_inspection_policy, "trust_config", null)
 }
 
 # URL List - The created list can be within the swp policy rules.
