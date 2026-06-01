@@ -8,6 +8,13 @@ and this project adheres to
 [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 This changelog is generated automatically based on [Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/).
 
+## [0.4.1](https://github.com/GoogleCloudPlatform/terraform-google-secure-web-proxy/compare/v0.4.0...v0.4.1) (2026-06-01)
+
+
+### Bug Fixes
+
+* added support for trust_config in tls_inpection_policy ([#52](https://github.com/GoogleCloudPlatform/terraform-google-secure-web-proxy/issues/52)) ([2a824fa](https://github.com/GoogleCloudPlatform/terraform-google-secure-web-proxy/commit/2a824fa73a9cbd6a3b0212740e2d58c5e93fdf1f))
+
 ## [0.4.0](https://github.com/GoogleCloudPlatform/terraform-google-secure-web-proxy/compare/v0.3.1...v0.4.0) (2026-03-30)
 
 
