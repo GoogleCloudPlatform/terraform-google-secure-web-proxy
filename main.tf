@@ -14,6 +14,24 @@
  * limitations under the License.
  */
 
+locals {
+  # 1. Safely extract the string from the object if it exists
+  raw_string = try(var.service_attachment.consumer_accept_list_str, "")
+
+  # 2. Parse the string into a map, exactly like before
+  parsed_consumer_accept_list = {
+    for pair in split(",", local.raw_string) :
+    split("=", pair)[0] => tonumber(split("=", pair)[1])
+    if length(split("=", pair)) == 2
+  }
+
+  # 3. Merge them together (string input takes priority over the map input)
+  final_consumer_accept_lists = merge(
+    try(var.service_attachment.consumer_accept_lists, {}),
+    local.parsed_consumer_accept_list
+  )
+}
+
 # Network Services Gateway
 resource "google_network_services_gateway" "this" {
   name              = var.gateway_name
@@ -73,7 +91,7 @@ resource "google_compute_service_attachment" "default" {
   enable_proxy_protocol = coalesce(var.service_attachment.enable_proxy_protocol, false)
   reconcile_connections = coalesce(var.service_attachment.reconcile_connections, false)
   dynamic "consumer_accept_lists" {
-    for_each = var.service_attachment.consumer_accept_lists
+    for_each = local.final_consumer_accept_lists
     iterator = accept
     content {
       project_id_or_num = accept.key

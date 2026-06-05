@@ -60,13 +60,14 @@ variable "certificate_urls" {
 }
 
 variable "service_attachment" {
-  description = "PSC service attachment configuration."
+  description = "PSC service attachment configuration. Note: The consumer accept list can be provided as a map (consumer_accept_lists) or as a string (consumer_accept_list_str). Expected string format: 'project-1=10,project-2=20'."
   type = object({
     name                             = optional(string)
     nat_subnets                      = optional(list(string))
     automatic_accept_all_connections = optional(bool)
     consumer_accept_lists            = optional(map(string), {})
     consumer_reject_lists            = optional(list(string))
+    consumer_accept_list_str         = optional(string, "")
     description                      = optional(string)
     domain_name                      = optional(string)
     enable_proxy_protocol            = optional(bool)
