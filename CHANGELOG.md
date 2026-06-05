@@ -8,6 +8,13 @@ and this project adheres to
 [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 This changelog is generated automatically based on [Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/).
 
+## [0.4.2](https://github.com/GoogleCloudPlatform/terraform-google-secure-web-proxy/compare/v0.4.1...v0.4.2) (2026-06-05)
+
+
+### Bug Fixes
+
+* added new input field ([#54](https://github.com/GoogleCloudPlatform/terraform-google-secure-web-proxy/issues/54)) ([b89bba6](https://github.com/GoogleCloudPlatform/terraform-google-secure-web-proxy/commit/b89bba69aac1e1862567db2e12303dcea1044ea3))
+
 ## [0.4.1](https://github.com/GoogleCloudPlatform/terraform-google-secure-web-proxy/compare/v0.4.0...v0.4.1) (2026-06-01)
 
 
