@@ -8,6 +8,13 @@ and this project adheres to
 [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 This changelog is generated automatically based on [Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/).
 
+## [0.4.3](https://github.com/GoogleCloudPlatform/terraform-google-secure-web-proxy/compare/v0.4.2...v0.4.3) (2026-06-12)
+
+
+### Bug Fixes
+
+* implement explicit replacement trigger for SWP Service Attachments ([#56](https://github.com/GoogleCloudPlatform/terraform-google-secure-web-proxy/issues/56)) ([4fda9dc](https://github.com/GoogleCloudPlatform/terraform-google-secure-web-proxy/commit/4fda9dc8c843de05517884a0ebb90c6cd04560a6))
+
 ## [0.4.2](https://github.com/GoogleCloudPlatform/terraform-google-secure-web-proxy/compare/v0.4.1...v0.4.2) (2026-06-05)
 
 
