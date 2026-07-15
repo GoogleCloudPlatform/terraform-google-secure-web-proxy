@@ -242,7 +242,9 @@ resource "google_network_security_server_tls_policy" "this" {
   project     = var.project_id
   labels      = var.server_tls_policy_config.labels
   allow_open  = var.server_tls_policy_config.allow_open
-
+  lifecycle {
+    create_before_destroy = true
+  }
   # Server Certificate Block
   dynamic "server_certificate" {
     for_each = var.server_tls_policy_config.server_certificate != null ? [var.server_tls_policy_config.server_certificate] : []
