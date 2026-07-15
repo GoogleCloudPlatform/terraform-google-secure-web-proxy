@@ -8,6 +8,13 @@ and this project adheres to
 [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 This changelog is generated automatically based on [Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/).
 
+## [0.4.4](https://github.com/GoogleCloudPlatform/terraform-google-secure-web-proxy/compare/v0.4.3...v0.4.4) (2026-07-15)
+
+
+### Bug Fixes
+
+* added lifecycle block for serverTlsPolicy ([#58](https://github.com/GoogleCloudPlatform/terraform-google-secure-web-proxy/issues/58)) ([7eade9a](https://github.com/GoogleCloudPlatform/terraform-google-secure-web-proxy/commit/7eade9aca0c0011bdb615a46463322c8faa36855))
+
 ## [0.4.3](https://github.com/GoogleCloudPlatform/terraform-google-secure-web-proxy/compare/v0.4.2...v0.4.3) (2026-06-12)
 
 
