@@ -8,6 +8,13 @@ and this project adheres to
 [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 This changelog is generated automatically based on [Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/).
 
+## [0.4.5](https://github.com/GoogleCloudPlatform/terraform-google-secure-web-proxy/compare/v0.4.4...v0.4.5) (2026-08-12)
+
+
+### Bug Fixes
+
+* added new input field exclude_public_ca_set in tls_inspection_policy ([#60](https://github.com/GoogleCloudPlatform/terraform-google-secure-web-proxy/issues/60)) ([4d4c44e](https://github.com/GoogleCloudPlatform/terraform-google-secure-web-proxy/commit/4d4c44e27706fefcfbf00b3637828e8241ee929f))
+
 ## [0.4.4](https://github.com/GoogleCloudPlatform/terraform-google-secure-web-proxy/compare/v0.4.3...v0.4.4) (2026-07-15)
 
 
