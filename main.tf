@@ -98,11 +98,6 @@ resource "google_compute_service_attachment" "default" {
       connection_limit  = accept.value
     }
   }
-  lifecycle {
-    replace_triggered_by = [
-      google_network_services_gateway.this
-    ]
-  }
 }
 
 # Gateway Security Policy
