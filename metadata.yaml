@@ -82,6 +82,7 @@ spec:
               enable_proxy_protocol            = optional(bool)
               reconcile_connections            = optional(bool)
             })
+        defaultValue: null
       - name: network
         description: URI of the network for which this secure web proxy will be created.
         varType: string
@@ -199,6 +200,7 @@ spec:
                 }), {})
               }))
             })
+        defaultValue: null
       - name: server_tls_policy_config
         description: Configuration for the Server TLS Policy. Defines how the server authenticates incoming requests.
         varType: |-
@@ -232,6 +234,7 @@ spec:
                 }))
               }))
             })
+        defaultValue: null
     outputs:
       - name: certificate_id
         description: The ID of the created certificate in Certificate Manager.
