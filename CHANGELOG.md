@@ -8,6 +8,13 @@ and this project adheres to
 [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 This changelog is generated automatically based on [Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/).
 
+## [0.4.7](https://github.com/GoogleCloudPlatform/terraform-google-secure-web-proxy/compare/v0.4.6...v0.4.7) (2026-10-08)
+
+
+### Bug Fixes
+
+* populate null defaultValue in secure-web-proxy blueprint metadata ([#65](https://github.com/GoogleCloudPlatform/terraform-google-secure-web-proxy/issues/65)) ([48d04b8](https://github.com/GoogleCloudPlatform/terraform-google-secure-web-proxy/commit/48d04b831147dc5df8fffec245908d8d01d599f9))
+
 ## [0.4.6](https://github.com/GoogleCloudPlatform/terraform-google-secure-web-proxy/compare/v0.4.5...v0.4.6) (2026-08-14)
 
 
